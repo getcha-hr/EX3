@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>겟차셀렉트 조직도 제안 v2.1</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Pretendard', -apple-system, sans-serif; background: #F9FAFB; }
+  .eng { font-family: 'Inter', sans-serif; }
+  .card { transition: transform 0.15s ease, box-shadow 0.15s ease; }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
+  .tab-active { background: #0F172A; color: white; box-shadow: 0 4px 12px rgba(15,23,42,0.3); }
+  .tab-inactive { background: white; color: #64748B; border: 1px solid #E2E8F0; }
+  .team-getcha { background: linear-gradient(135deg, #DBEAFE 0%, #EFF6FF 100%); border-color: #3B82F6; }
+  .team-woojin { background: linear-gradient(135deg, #FEE2E2 0%, #FEF2F2 100%); border-color: #EF4444; }
+  .team-shared { background: linear-gradient(135deg, #FEF3C7 0%, #FFFBEB 100%); border-color: #F59E0B; }
+  .team-eng { background: linear-gradient(135deg, #F1F5F9 0%, #F8FAFC 100%); border-color: #64748B; }
+  .leader-badge { background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%); color: white; font-size: 10px; padding: 2px 6px; border-radius: 6px; display: inline-block; margin-left: 4px; font-weight: 700; }
+  .team-title { font-weight: 800; letter-spacing: -0.02em; }
+  .member { font-size: 12px; padding: 3px 8px; border-radius: 6px; background: white; margin: 2px 2px; display: inline-block; border: 1px solid rgba(0,0,0,0.06); }
+  .member.leader { background: #FEF9C3; font-weight: 600; }
+  .member.getcha { border-left: 3px solid #3B82F6; }
+  .member.woojin { border-left: 3px solid #EF4444; }
+  .count-badge { background: rgba(0,0,0,0.06); border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600; }
+  .badge-getcha { background: #DBEAFE; color: #1E40AF; padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+  .badge-woojin { background: #FEE2E2; color: #991B1B; padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+  h1, h2, h3, h4 { letter-spacing: -0.02em; }
+  .anim-in { animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .eng-tag {
+    display: inline-block; padding: 4px 10px; border-radius: 6px;
+    font-family: 'Inter', sans-serif; font-weight: 800; letter-spacing: 0.02em; font-size: 14px;
+  }
+</style>
+</head>
+<body class="text-slate-800">
+
+<!-- ============================================ Header ============================================ -->
+<header class="bg-gradient-to-r from-slate-900 to-slate-700 text-white py-8 px-6 shadow-lg">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-xs uppercase tracking-widest text-slate-300 mb-2">Organization Proposal · v2.1 · 2026.08.25 · 겟차 피플팀</div>
+    <h1 class="text-3xl md:text-4xl font-extrabold">주식회사 겟차셀렉트 <span class="eng text-slate-300 font-normal">(Getcha Select)</span></h1>
+    <p class="text-slate-300 mt-2 text-sm md:text-base">우진오토모빌 × 겟차 합작법인 · <b class="text-yellow-300">라포르(rapor)</b> 서비스 운영 · 부산 본점 + 서울 크로스팀</p>
+    <div class="mt-4 flex gap-3 flex-wrap text-xs">
+      <span class="bg-white/10 border border-white/20 px-3 py-1 rounded-full">👥 참여 16명 (우진 7 · 겟차 9)</span>
+      <span class="bg-white/10 border border-white/20 px-3 py-1 rounded-full">🏢 본점 부산 기장군 B112호</span>
+      <span class="bg-white/10 border border-white/20 px-3 py-1 rounded-full">🚗 자동차매매업 · rapor.co.kr</span>
+      <span class="bg-white/10 border border-white/20 px-3 py-1 rounded-full">🎯 벤치마킹: 케이카 · 헤이딜러</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================ Tab Nav ============================================ -->
+<div class="sticky top-0 bg-white shadow-sm z-40 border-b border-slate-200">
+  <div class="max-w-7xl mx-auto flex gap-2 p-3 overflow-x-auto">
+    <button id="tabV1" onclick="showTab('V1')" class="tab-active px-4 py-2 rounded-lg font-semibold text-sm transition whitespace-nowrap">🏛 V1. 전통 조직</button>
+    <button id="tabV2" onclick="showTab('V2')" class="tab-inactive px-4 py-2 rounded-lg font-semibold text-sm transition whitespace-nowrap">🚀 V2. 스타트업(한글)</button>
+    <button id="tabV3" onclick="showTab('V3')" class="tab-inactive px-4 py-2 rounded-lg font-semibold text-sm transition whitespace-nowrap">⚡ V3. Startup EN</button>
+    <button id="tabCompare" onclick="showTab('Compare')" class="tab-inactive px-4 py-2 rounded-lg font-semibold text-sm transition whitespace-nowrap">⚖️ 3안 비교</button>
+    <button id="tabBenchmark" onclick="showTab('Benchmark')" class="tab-inactive px-4 py-2 rounded-lg font-semibold text-sm transition whitespace-nowrap">📚 타사 사례</button>
+    <button id="tabPeople" onclick="showTab('People')" class="tab-inactive px-4 py-2 rounded-lg font-semibold text-sm transition whitespace-nowrap">👥 참여 인원</button>
+  </div>
+</div>
+
+<!-- ============================================ V1: Traditional ============================================ -->
+<section id="viewV1" class="max-w-7xl mx-auto p-6">
+  <div class="anim-in">
+    <div class="mb-6">
+      <h2 class="text-2xl font-extrabold text-slate-900">🏛 Version 1. 전통 조직 구조</h2>
+      <p class="text-sm text-slate-600 mt-1">케이카(K Car)식 · 본부·팀 위계 명확 · 사업본부·지원본부 분리</p>
+    </div>
+
+    <!-- 요약 박스 -->
+    <div class="mb-6 bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+      <div class="text-base font-bold text-red-700 uppercase tracking-wider mb-3"><span class="text-xl mr-1">📖</span> 이 조직은 이렇게 구성됩니다</div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+        <div>
+          <div class="text-base font-bold text-slate-800 mb-3">🏢 조직 구조</div>
+          <ul class="text-sm leading-relaxed text-slate-600 space-y-2">
+            <li>• <b>3계층 위계</b>: 대표이사 → 본부 → 팀 → 팀원</li>
+            <li>• 총 <b>6개 본부</b>: 사업 · 상품화 · 프로덕트 · 데이터 · 마케팅 · 경영관리</li>
+            <li>• 케이카식 <b>CPO 직영 모델</b> (매입→상품화→판매)</li>
+          </ul>
+        </div>
+        <div>
+          <div class="text-base font-bold text-slate-800 mb-3">👔 리더 호칭·문화</div>
+          <ul class="text-sm leading-relaxed text-slate-600 space-y-2">
+            <li>• <b>본부장 · 팀장 · 과장 · 대리</b> (전통 위계)</li>
+            <li>• 지휘 계통 명확 · 우진 기존 조직도와 자연스러운 매핑</li>
+            <li>• 오프라인 직영 확장·법령 대응에 유리</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CEO -->
+    <div class="flex justify-center mb-6">
+      <div class="card bg-slate-900 text-white rounded-xl px-8 py-4 shadow-lg text-center min-w-[280px]">
+        <div class="text-xs uppercase tracking-widest text-slate-300">Chief Executive Officer</div>
+        <div class="text-xl font-bold mt-1">지니 (Gini) · 이경진</div>
+        <div class="text-xs text-slate-300 mt-1">대표이사 · 매입 총괄</div>
+      </div>
+    </div>
+
+    <!-- Line down -->
+    <div class="flex justify-center"><div class="w-0.5 h-6 bg-slate-300"></div></div>
+
+    <!-- 사내이사 -->
+    <div class="flex justify-center gap-3 mb-8 flex-wrap">
+      <span class="bg-slate-100 rounded-full px-3 py-1 text-xs">사내이사: 알렉스 (Alex/정유철)</span>
+      <span class="bg-slate-100 rounded-full px-3 py-1 text-xs">사내이사: 딘 (Dean/이동용)</span>
+    </div>
+
+    <!-- 사업본부 그룹 -->
+    <div class="mb-3"><h3 class="font-extrabold text-slate-800">🚗 사업본부 (부산 · 우진)</h3></div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <!-- 매입/판매 -->
+      <div class="card team-woojin border-2 rounded-xl p-5">
+        <div class="flex justify-between items-start mb-3">
+          <div>
+            <div class="text-xs font-bold text-red-700 uppercase">Trading</div>
+            <h3 class="team-title text-lg">매입·판매팀</h3>
+          </div>
+          <span class="count-badge">3명</span>
+        </div>
+        <div class="space-y-2">
+          <div class="bg-white rounded-lg p-3 border border-red-100">
+            <div class="font-bold text-sm mb-1">매입 (Buy)</div>
+            <span class="member leader woojin">👑 지니 (매입 총괄)</span>
+            <span class="member woojin">제이 (Jay/남재찬)</span>
+          </div>
+          <div class="bg-white rounded-lg p-3 border border-red-100">
+            <div class="font-bold text-sm mb-1">판매 (Sell)</div>
+            <span class="member leader woojin">👑 피트 (Pitt/장규형)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 상품화팀 -->
+      <div class="card team-woojin border-2 rounded-xl p-5">
+        <div class="flex justify-between items-start mb-3">
+          <div>
+            <div class="text-xs font-bold text-red-700 uppercase">Product Prep</div>
+            <h3 class="team-title text-lg">상품화팀</h3>
+          </div>
+          <span class="count-badge">2명</span>
+        </div>
+        <div class="space-y-2">
+          <div class="bg-white rounded-lg p-3 border border-red-100">
+            <div class="font-bold text-sm mb-1">복원·광택</div>
+            <span class="member leader woojin">👑 로건 (Logan/김승현) · 복원</span>
+            <span class="member woojin">에단 (Ethan/최강민) · 광택</span>
+          </div>
+        </div>
+        <div class="mt-2 text-xs text-slate-500">헤이딜러 테크베이 벤치마킹 · PDI 프로세스</div>
+      </div>
+
+      <!-- 현장운영팀 -->
+      <div class="card team-woojin border-2 rounded-xl p-5">
+        <div class="flex justify-between items-start mb-3">
+          <div>
+            <div class="text-xs font-bold text-red-700 uppercase">Operations</div>
+            <h3 class="team-title text-lg">현장운영팀</h3>
+          </div>
+          <span class="count-badge">2명</span>
+        </div>
+        <div class="space-y-2">
+          <div class="bg-white rounded-lg p-3 border border-red-100">
+            <span class="member leader woojin">👑 우디 (Woody/조창우) · 재고총괄</span>
+            <span class="member woojin">퓨엘 (Fuel/김상진) · 성능·출고</span>
+          </div>
+        </div>
+        <div class="mt-2 text-xs text-slate-500">재고·출고·성능 진단 총괄 · 크로스팀 브릿지</div>
+      </div>
+    </div>
+
+    <!-- 프로덕트/데이터/마케팅 -->
+    <div class="mb-3"><h3 class="font-extrabold text-slate-800">💻 프로덕트·성장 본부 (서울 · 겟차)</h3></div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="card team-getcha border-2 rounded-xl p-5">
+        <div class="flex justify-between items-start mb-3">
+          <div>
+            <div class="text-xs font-bold text-blue-700 uppercase">Product</div>
+            <h3 class="team-title text-lg">개발팀</h3>
+          </div>
+          <span class="count-badge">2명</span>
+        </div>
+        <div class="bg-white rounded-lg p-3 border border-blue-100">
+          <span class="member leader getcha">👑 레오 (Leo/이재호) · Backend Engineer</span>
+          <span class="member getcha">원 (Won/이형원) · Backend&Infra</span>
+        </div>
+      </div>
+      <div class="card team-getcha border-2 rounded-xl p-5">
+        <div class="flex justify-between items-start mb-3">
+          <div>
+            <div class="text-xs font-bold text-blue-700 uppercase">Data</div>
+            <h3 class="team-title text-lg">데이터팀</h3>
+          </div>
+          <span class="count-badge">1명</span>
+        </div>
+        <div class="bg-white rounded-lg p-3 border border-blue-100">
+          <span class="member leader getcha">👑 조슈아 (Joshua/이준범) · Data Scientist</span>
+        </div>
+      </div>
+      <div class="card team-getcha border-2 rounded-xl p-5">
+        <div class="flex justify-between items-start mb-3">
+          <div>
+            <div class="text-xs font-bold text-blue-700 uppercase">Marketing</div>
+            <h3 class="team-title text-lg">마케팅팀</h3>
+          </div>
+          <span class="count-badge">1명</span>
+        </div>
+        <div class="bg-white rounded-lg p-3 border border-blue-100">
+          <span class="member leader getcha">👑 젤리 (Jelly/송재경) · Marketer</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 경영관리본부 -->
+    <div class="mb-3"><h3 class="font-extrabold text-slate-800">🤝 경영관리본부 (서울)</h3></div>
+    <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+      <div class="card team-shared border-2 rounded-xl p-5">
+        <div class="flex justify-between items-start mb-3">
+          <div>
+            <div class="text-xs font-bold text-amber-700 uppercase">Corporate Management · People + Finance + Legal + Admin</div>
+            <h3 class="team-title text-lg">경영관리팀 (통합)</h3>
+            <div class="text-xs text-slate-600 mt-1">인사 · 재무 · 법무 · 중고차 행정처리 통합 조직</div>
+          </div>
+          <span class="count-badge">3명</span>
+        </div>
+        <div class="bg-white rounded-lg p-3 border border-amber-100 space-y-2">
+          <div>
+            <div class="font-bold text-sm mb-1">👥 인사·행정 (People & Admin)</div>
+            <span class="member leader getcha">👑 티제이 (TJ/정태준) · HR Director</span>
+            <span class="member getcha">신디 (Cindy/차예원) · 인사·총무·차량 행정</span>
+          </div>
+          <div class="border-t pt-2">
+            <div class="font-bold text-sm mb-1">💰 재무·법무 (Finance & Legal)</div>
+            <span class="member leader getcha">👑 줄리안 (Julian/배준영) · Finance Director</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 특징 -->
+    <div class="mt-10 bg-white rounded-xl p-5 border border-slate-200">
+      <h3 class="font-bold text-slate-900 mb-3">📌 V1 특징</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+        <div class="bg-slate-50 rounded-lg p-3">
+          <div class="font-bold text-slate-700">✅ 장점</div>
+          <ul class="text-xs mt-2 space-y-1 text-slate-600">
+            <li>• 우진 기존 조직도와 매핑 자연스러움</li>
+            <li>• 케이카식 CPO 모델 (매입→상품화→판매)</li>
+            <li>• 지휘 계통 명확</li>
+          </ul>
+        </div>
+        <div class="bg-slate-50 rounded-lg p-3">
+          <div class="font-bold text-slate-700">⚠️ 단점</div>
+          <ul class="text-xs mt-2 space-y-1 text-slate-600">
+            <li>• 16명 규모 대비 본부 계층 과다</li>
+            <li>• 겟차 수평 문화와 충돌</li>
+          </ul>
+        </div>
+        <div class="bg-slate-50 rounded-lg p-3">
+          <div class="font-bold text-slate-700">🎯 적합</div>
+          <ul class="text-xs mt-2 space-y-1 text-slate-600">
+            <li>• 오프라인 직영·매입 볼륨 목표</li>
+            <li>• 우진 인원 압도적 비율</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ V2: Startup (Korean) ============================================ -->
+<section id="viewV2" class="max-w-7xl mx-auto p-6 hidden">
+  <div class="anim-in">
+    <div class="mb-6">
+      <h2 class="text-2xl font-extrabold text-slate-900">🚀 Version 2. 스타트업 크로스팀 (한글)</h2>
+      <p class="text-sm text-slate-600 mt-1">헤이딜러(PRND)식 · 셀 매트릭스 · 리더 중심 수평 · 한글 팀명</p>
+    </div>
+
+    <!-- 요약 박스 -->
+    <div class="mb-6 bg-blue-50 border-l-4 border-blue-500 rounded-r-xl p-6">
+      <div class="text-base font-bold text-blue-700 uppercase tracking-wider mb-3"><span class="text-xl mr-1">📖</span> 이 조직은 이렇게 구성됩니다</div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+        <div>
+          <div class="text-base font-bold text-slate-800 mb-3">🏢 조직 구조</div>
+          <ul class="text-sm leading-relaxed text-slate-600 space-y-2">
+            <li>• <b>2계층 셀 매트릭스</b>: 대표이사 → 셀 → 셀원</li>
+            <li>• <b>Cross Team (서울)</b>: 제품·데이터·마케팅·백오피스 4개 셀</li>
+            <li>• <b>Field Team (부산)</b>: 매입·판매·상품화·현장운영 4개 셀</li>
+          </ul>
+        </div>
+        <div>
+          <div class="text-base font-bold text-slate-800 mb-3">👔 리더 호칭·문화</div>
+          <ul class="text-sm leading-relaxed text-slate-600 space-y-2">
+            <li>• <b>셀 리더</b> 중심 수평 조직 (헤이딜러 스타일)</li>
+            <li>• 리더 자율 · 크로스팀·필드팀 매트릭스 협업</li>
+            <li>• 한글 셀명 · 스타트업 문화 정착에 유리</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CEO -->
+    <div class="flex flex-col items-center mb-6">
+      <div class="card bg-slate-900 text-white rounded-xl px-8 py-4 shadow-lg text-center min-w-[280px] mb-3">
+        <div class="text-xs uppercase tracking-widest text-slate-300">CEO · 대표이사</div>
+        <div class="text-xl font-bold mt-1">지니 (Gini) · 이경진</div>
+      </div>
+      <div class="flex gap-2 flex-wrap justify-center text-xs">
+        <span class="bg-slate-100 rounded-full px-3 py-1">사내이사 알렉스</span>
+        <span class="bg-slate-100 rounded-full px-3 py-1">사내이사 딘</span>
+      </div>
+    </div>
+
+    <!-- Cross Team -->
+    <div class="mb-3 flex items-center justify-between">
+      <h3 class="font-extrabold text-lg text-slate-900">🎯 Cross Team · 서울 (겟차)</h3>
+      <span class="text-xs text-slate-500">전사 인프라·프로덕트·브랜딩 지원</span>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+      <div class="card team-getcha border-2 rounded-xl p-4">
+        <div class="text-xs font-bold text-blue-700 mb-1">PRODUCT</div>
+        <div class="team-title text-base">제품 셀</div>
+        <div class="text-xs text-slate-600 mt-1">개발 · 인프라</div>
+        <div class="mt-3">
+          <span class="member leader getcha">👑 레오</span>
+          <span class="member getcha">원</span>
+        </div>
+      </div>
+      <div class="card team-getcha border-2 rounded-xl p-4">
+        <div class="text-xs font-bold text-blue-700 mb-1">DATA</div>
+        <div class="team-title text-base">데이터 셀</div>
+        <div class="text-xs text-slate-600 mt-1">Data Science</div>
+        <div class="mt-3">
+          <span class="member leader getcha">👑 조슈아</span>
+        </div>
+      </div>
+      <div class="card team-getcha border-2 rounded-xl p-4">
+        <div class="text-xs font-bold text-blue-700 mb-1">MARKETING</div>
+        <div class="team-title text-base">마케팅 셀</div>
+        <div class="text-xs text-slate-600 mt-1">라포르 브랜딩</div>
+        <div class="mt-3">
+          <span class="member leader getcha">👑 젤리</span>
+        </div>
+      </div>
+      <div class="card team-shared border-2 rounded-xl p-4">
+        <div class="text-xs font-bold text-amber-700 mb-1">BACK OFFICE</div>
+        <div class="team-title text-base">백오피스 셀</div>
+        <div class="text-xs text-slate-600 mt-1">인사 · 재무 · 법무 · 차량 행정 통합</div>
+        <div class="mt-3">
+          <span class="member leader getcha">👑 티제이 (인사)</span>
+          <span class="member getcha">신디 (인사·총무)</span>
+          <span class="member getcha">줄리안 (재무·법무)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Field Team -->
+    <div class="mb-3 flex items-center justify-between">
+      <h3 class="font-extrabold text-lg text-slate-900">🚗 Field Team · 부산 (우진)</h3>
+      <span class="text-xs text-slate-500">중고차 매입·상품화·판매 실행</span>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="card team-woojin border-2 rounded-xl p-4">
+        <div class="text-xs font-bold text-red-700 mb-1">TRADING</div>
+        <div class="team-title text-base">매입·판매 셀</div>
+        <div class="flex gap-2 mt-2"><span class="count-badge">매입 2 · 판매 1</span></div>
+        <div class="mt-3">
+          <span class="member leader woojin">👑 지니 (매입)</span>
+          <span class="member woojin">제이</span>
+          <span class="member leader woojin">👑 피트 (판매)</span>
+        </div>
+      </div>
+      <div class="card team-woojin border-2 rounded-xl p-4">
+        <div class="text-xs font-bold text-red-700 mb-1">PDI</div>
+        <div class="team-title text-base">상품화 셀</div>
+        <div class="flex gap-2 mt-2"><span class="count-badge">복원 1 · 광택 1</span></div>
+        <div class="mt-3">
+          <span class="member leader woojin">👑 로건 (복원)</span>
+          <span class="member woojin">에단 (광택)</span>
+        </div>
+      </div>
+      <div class="card team-woojin border-2 rounded-xl p-4">
+        <div class="text-xs font-bold text-red-700 mb-1">FIELD OPS</div>
+        <div class="team-title text-base">현장운영 셀</div>
+        <div class="flex gap-2 mt-2"><span class="count-badge">2명</span></div>
+        <div class="mt-3">
+          <span class="member leader woojin">👑 우디 (재고총괄)</span>
+          <span class="member woojin">퓨엘 (성능·출고)</span>
+        </div>
+        <div class="mt-2 text-xs text-slate-500">재고·출고·성능 진단 · 크로스팀 브릿지</div>
+      </div>
+    </div>
+
+    <!-- 특징 -->
+    <div class="mt-10 bg-white rounded-xl p-5 border border-slate-200">
+      <h3 class="font-bold text-slate-900 mb-3">📌 V2 특징</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+        <div class="bg-slate-50 rounded-lg p-3">
+          <div class="font-bold text-slate-700">✅ 장점</div>
+          <ul class="text-xs mt-2 space-y-1 text-slate-600">
+            <li>• 16명 규모에 최적</li>
+            <li>• 크로스팀·필드팀 매트릭스 협업</li>
+            <li>• 리더 중심 빠른 의사결정</li>
+          </ul>
+        </div>
+        <div class="bg-slate-50 rounded-lg p-3">
+          <div class="font-bold text-slate-700">⚠️ 단점</div>
+          <ul class="text-xs mt-2 space-y-1 text-slate-600">
+            <li>• 우진 팀장·과장 매핑 협의 필요</li>
+            <li>• 위계 없는 문화 적응 시간</li>
+          </ul>
+        </div>
+        <div class="bg-slate-50 rounded-lg p-3">
+          <div class="font-bold text-slate-700">🎯 적합</div>
+          <ul class="text-xs mt-2 space-y-1 text-slate-600">
+            <li>• 라포르 서비스 성장 지향</li>
+            <li>• 데이터·프로덕트 중심</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ V3: Startup English ============================================ -->
+<section id="viewV3" class="max-w-7xl mx-auto p-6 hidden">
+  <div class="anim-in">
+    <div class="mb-6">
+      <h2 class="text-2xl font-extrabold text-slate-900">⚡ Version 3. Startup <span class="eng">English</span></h2>
+      <p class="text-sm text-slate-600 mt-1">Silicon Valley 스타일 · 4자 이내 영문 심플 명칭 · Team 단위 · 국제 표준</p>
+    </div>
+
+    <!-- 요약 박스 -->
+    <div class="mb-6 bg-slate-100 border-l-4 border-slate-700 rounded-r-xl p-6">
+      <div class="text-base font-bold text-slate-700 uppercase tracking-wider mb-3"><span class="text-xl mr-1">📖</span> 이 조직은 이렇게 구성됩니다</div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+        <div>
+          <div class="text-base font-bold text-slate-800 mb-3">🏢 조직 구조</div>
+          <ul class="text-sm leading-relaxed text-slate-600 space-y-2">
+            <li>• <b>2계층 Team 구조</b>: CEO → Team → Member</li>
+            <li>• 총 <b>8개 Team + BD</b>: Tech · Data · Mktg · Back · Buy · Sell · PDI · Ops</li>
+            <li>• <b>4자 이내 영문 태그</b> — 이메일 그룹·Slack 채널과 통일</li>
+          </ul>
+        </div>
+        <div>
+          <div class="text-base font-bold text-slate-800 mb-3">👔 리더 호칭·문화</div>
+          <ul class="text-sm leading-relaxed text-slate-600 space-y-2">
+            <li>• <b>Lead</b> 통일 (예: Tech Lead · Back Lead)</li>
+            <li>• Silicon Valley 스타일 · 글로벌 확장·투자 유치 유리</li>
+            <li>• 이메일 <span class="eng">tech@rapor.co.kr</span> · Slack <span class="eng">#tech</span> 통일</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 조직 명명 규칙 -->
+    <div class="mb-6 bg-slate-50 border border-slate-200 rounded-xl p-4">
+      <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">📐 조직 명명 규칙 (Naming Convention)</div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+        <div><span class="font-bold text-slate-700">조직 단위</span><div class="text-slate-600 mt-1"><b class="eng">Team</b> (예: Tech Team · 기술팀)</div></div>
+        <div><span class="font-bold text-slate-700">리더 호칭</span><div class="text-slate-600 mt-1"><b class="eng">Lead</b> (예: Tech Lead · Back Lead)</div></div>
+        <div><span class="font-bold text-slate-700">이메일 그룹</span><div class="text-slate-600 mt-1 eng">tech@ · data@ · mktg@ · back@</div></div>
+        <div><span class="font-bold text-slate-700">Slack 채널</span><div class="text-slate-600 mt-1 eng">#tech · #data · #mktg · #back</div></div>
+      </div>
+    </div>
+
+    <!-- CEO -->
+    <div class="flex flex-col items-center mb-6">
+      <div class="card bg-slate-900 text-white rounded-xl px-8 py-4 shadow-lg text-center min-w-[280px] mb-3">
+        <div class="text-xs uppercase tracking-widest text-slate-300 eng">CEO</div>
+        <div class="text-xl font-bold mt-1 eng">Gini</div>
+        <div class="text-xs text-slate-300 mt-1">이경진 · 대표이사</div>
+      </div>
+      <div class="flex gap-2 flex-wrap justify-center text-xs">
+        <span class="bg-slate-100 rounded-full px-3 py-1"><span class="eng">BD · Alex</span> <span class="text-slate-500">· 정유철 · 사내이사</span></span>
+        <span class="bg-slate-100 rounded-full px-3 py-1"><span class="eng">BD · Dean</span> <span class="text-slate-500">· 이동용 · 사내이사</span></span>
+      </div>
+    </div>
+
+    <!-- HQ Cells (Seoul) -->
+    <div class="mb-3 flex items-center justify-between">
+      <h3 class="font-extrabold text-lg text-slate-900"><span class="eng">🏢 HQ · Seoul</span> · <span class="text-slate-600">서울 본부</span></h3>
+      <span class="text-xs text-slate-500">Growth · Infrastructure · Support</span>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
+      <div class="card team-eng border-2 rounded-xl p-4">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="eng-tag bg-blue-600 text-white">Tech</span>
+          <span class="text-sm font-bold text-slate-700">기술팀</span>
+        </div>
+        <div class="text-xs text-slate-600 mt-2">Engineering · 개발·인프라</div>
+        <div class="mt-3">
+          <span class="member leader getcha">👑 Leo <span class="text-slate-400 text-[10px]">이재호 · Lead</span></span>
+          <span class="member getcha">Won <span class="text-slate-400 text-[10px]">이형원</span></span>
+        </div>
+      </div>
+      <div class="card team-eng border-2 rounded-xl p-4">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="eng-tag bg-indigo-600 text-white">Data</span>
+          <span class="text-sm font-bold text-slate-700">데이터팀</span>
+        </div>
+        <div class="text-xs text-slate-600 mt-2">Data Science · 분석·BI</div>
+        <div class="mt-3">
+          <span class="member leader getcha">👑 Joshua <span class="text-slate-400 text-[10px]">이준범 · Lead</span></span>
+        </div>
+      </div>
+      <div class="card team-eng border-2 rounded-xl p-4">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="eng-tag bg-pink-600 text-white">Mktg</span>
+          <span class="text-sm font-bold text-slate-700">마케팅팀</span>
+        </div>
+        <div class="text-xs text-slate-600 mt-2">Marketing · 브랜딩·퍼포먼스</div>
+        <div class="mt-3">
+          <span class="member leader getcha">👑 Jelly <span class="text-slate-400 text-[10px]">송재경 · Lead</span></span>
+        </div>
+      </div>
+      <div class="card team-eng border-2 rounded-xl p-4">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="eng-tag bg-stone-600 text-white">Back</span>
+          <span class="text-sm font-bold text-slate-700">백오피스팀</span>
+        </div>
+        <div class="text-xs text-slate-600 mt-2">Back Office · People + Finance + Legal + Admin<br>인사·재무·법무·중고차 행정처리 통합</div>
+        <div class="mt-3">
+          <span class="member leader getcha">👑 TJ <span class="text-slate-400 text-[10px]">정태준 · Lead·인사</span></span>
+          <span class="member getcha">Cindy <span class="text-slate-400 text-[10px]">차예원 · 인사·총무·차량 행정</span></span>
+          <span class="member getcha">Julian <span class="text-slate-400 text-[10px]">배준영 · 재무·법무</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Field Cells (Busan) -->
+    <div class="mb-3 flex items-center justify-between">
+      <h3 class="font-extrabold text-lg text-slate-900"><span class="eng">🚗 Field · Busan</span> · <span class="text-slate-600">부산 필드</span></h3>
+      <span class="text-xs text-slate-500">Sourcing · Prep · Selling · Operations</span>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div class="card team-eng border-2 rounded-xl p-4">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="eng-tag bg-red-600 text-white">Buy</span>
+          <span class="text-sm font-bold text-slate-700">매입팀</span>
+        </div>
+        <div class="text-xs text-slate-600 mt-2">Sourcing · 차량 매입·감정</div>
+        <div class="mt-3">
+          <span class="member leader woojin">👑 Gini <span class="text-slate-400 text-[10px]">이경진 · Lead</span></span>
+          <span class="member woojin">Jay <span class="text-slate-400 text-[10px]">남재찬</span></span>
+        </div>
+      </div>
+      <div class="card team-eng border-2 rounded-xl p-4">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="eng-tag bg-orange-600 text-white">Sell</span>
+          <span class="text-sm font-bold text-slate-700">판매팀</span>
+        </div>
+        <div class="text-xs text-slate-600 mt-2">Selling · B2C 판매</div>
+        <div class="mt-3">
+          <span class="member leader woojin">👑 Pitt <span class="text-slate-400 text-[10px]">장규형 · Lead</span></span>
+        </div>
+      </div>
+      <div class="card team-eng border-2 rounded-xl p-4">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="eng-tag bg-slate-700 text-white">PDI</span>
+          <span class="text-sm font-bold text-slate-700">상품화팀</span>
+        </div>
+        <div class="text-xs text-slate-600 mt-2">Pre-Delivery Inspection<br>복원 · 광택 · 정비</div>
+        <div class="mt-3">
+          <span class="member leader woojin">👑 Logan <span class="text-slate-400 text-[10px]">김승현 · Lead·복원</span></span>
+          <span class="member woojin">Ethan <span class="text-slate-400 text-[10px]">최강민·광택</span></span>
+        </div>
+      </div>
+      <div class="card team-eng border-2 rounded-xl p-4">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="eng-tag bg-teal-600 text-white">Ops</span>
+          <span class="text-sm font-bold text-slate-700">현장운영팀</span>
+        </div>
+        <div class="text-xs text-slate-600 mt-2">Field Operations<br>재고·출고·성능 진단 총괄</div>
+        <div class="mt-3">
+          <span class="member leader woojin">👑 Woody <span class="text-slate-400 text-[10px]">조창우 · Lead·재고총괄</span></span>
+          <span class="member woojin">Fuel <span class="text-slate-400 text-[10px]">김상진 · 성능·출고</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 조직명 설명 -->
+    <div class="mt-10 bg-white rounded-xl p-5 border border-slate-200">
+      <h3 class="font-bold text-slate-900 mb-3">🔤 영문 조직명 (4자 이내) — 총 9팀 + BD</h3>
+      <div class="text-xs text-slate-500 mb-3">모든 팀은 <b>Team</b> 단위 · 리더는 <b>Lead</b> · 이메일/Slack은 태그 그대로 (예: <span class="eng">tech@rapor.co.kr</span>)</div>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 text-xs">
+        <div class="bg-slate-50 rounded-lg p-3"><span class="eng-tag bg-blue-600 text-white">Tech</span><div class="mt-2 text-slate-600"><b>기술팀</b><br>Technology · 개발·인프라</div></div>
+        <div class="bg-slate-50 rounded-lg p-3"><span class="eng-tag bg-indigo-600 text-white">Data</span><div class="mt-2 text-slate-600"><b>데이터팀</b><br>Data Science · 분석·BI</div></div>
+        <div class="bg-slate-50 rounded-lg p-3"><span class="eng-tag bg-pink-600 text-white">Mktg</span><div class="mt-2 text-slate-600"><b>마케팅팀</b><br>Marketing · 브랜딩·퍼포먼스</div></div>
+        <div class="bg-slate-50 rounded-lg p-3"><span class="eng-tag bg-stone-600 text-white">Back</span><div class="mt-2 text-slate-600"><b>백오피스팀</b><br>Back Office<br>인사·재무·법무·차량 행정 통합</div></div>
+        <div class="bg-slate-50 rounded-lg p-3"><span class="eng-tag bg-red-600 text-white">Buy</span><div class="mt-2 text-slate-600"><b>매입팀</b><br>Sourcing · 차량 매입·감정</div></div>
+        <div class="bg-slate-50 rounded-lg p-3"><span class="eng-tag bg-orange-600 text-white">Sell</span><div class="mt-2 text-slate-600"><b>판매팀</b><br>Selling · B2C 차량 판매</div></div>
+        <div class="bg-slate-50 rounded-lg p-3"><span class="eng-tag bg-slate-700 text-white">PDI</span><div class="mt-2 text-slate-600"><b>상품화팀</b><br>Pre-Delivery Inspection<br>복원·광택·정비</div></div>
+        <div class="bg-slate-50 rounded-lg p-3"><span class="eng-tag bg-teal-600 text-white">Ops</span><div class="mt-2 text-slate-600"><b>현장운영팀</b><br>Field Operations<br>재고·출고·성능 진단 총괄</div></div>
+        <div class="bg-slate-50 rounded-lg p-3"><span class="eng-tag bg-slate-800 text-white">BD</span><div class="mt-2 text-slate-600"><b>이사회</b><br>Board of Directors · 사내이사</div></div>
+      </div>
+    </div>
+
+    <!-- 특징 -->
+    <div class="mt-6 bg-white rounded-xl p-5 border border-slate-200">
+      <h3 class="font-bold text-slate-900 mb-3">📌 V3 특징</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+        <div class="bg-slate-50 rounded-lg p-3">
+          <div class="font-bold text-slate-700">✅ 장점</div>
+          <ul class="text-xs mt-2 space-y-1 text-slate-600">
+            <li>• 국제 표준 (Silicon Valley 스타일)</li>
+            <li>• 태그·명함·이메일 그룹명(<span class="eng">tech@rapor.co.kr</span>)에 유리</li>
+            <li>• 4자 이내 → 슬랙 채널명·문서 명명 규칙 통일</li>
+            <li>• 향후 글로벌 확장·투자 유치 시 자연스러움</li>
+          </ul>
+        </div>
+        <div class="bg-slate-50 rounded-lg p-3">
+          <div class="font-bold text-slate-700">⚠️ 단점</div>
+          <ul class="text-xs mt-2 space-y-1 text-slate-600">
+            <li>• 우진 인원 낯설 수 있음 (설명 문서 필요)</li>
+            <li>• PDI 등 자동차업 용어 사전 교육 필요</li>
+          </ul>
+        </div>
+        <div class="bg-slate-50 rounded-lg p-3">
+          <div class="font-bold text-slate-700">🎯 적합</div>
+          <ul class="text-xs mt-2 space-y-1 text-slate-600">
+            <li>• 라포르 브랜드 · 프리미엄 포지셔닝</li>
+            <li>• 데이터·플랫폼 성장 전략</li>
+            <li>• 스타트업 컬처 확립 원하는 초기 조직</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ Compare ============================================ -->
+<section id="viewCompare" class="max-w-7xl mx-auto p-6 hidden">
+  <div class="anim-in">
+    <div class="mb-6">
+      <h2 class="text-2xl font-extrabold text-slate-900">⚖️ 3안 비교</h2>
+      <p class="text-sm text-slate-600 mt-1">전통 / 스타트업 한글 / 스타트업 English — 항목별 비교</p>
+    </div>
+
+    <div class="bg-white rounded-xl border border-slate-200 overflow-hidden overflow-x-auto">
+      <table class="w-full text-sm min-w-[900px]">
+        <thead>
+          <tr class="bg-slate-900 text-white">
+            <th class="py-3 px-4 text-left">비교 항목</th>
+            <th class="py-3 px-4 text-left">🏛 V1. 전통</th>
+            <th class="py-3 px-4 text-left">🚀 V2. Startup 한글</th>
+            <th class="py-3 px-4 text-left">⚡ V3. Startup EN</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold">벤치마크</td><td class="py-3 px-4">케이카 (K Car)</td><td class="py-3 px-4">헤이딜러 (PRND)</td><td class="py-3 px-4">Silicon Valley (Airbnb·Stripe 스타일)</td></tr>
+          <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold">조직 형태</td><td class="py-3 px-4">본부 → 팀 → 팀원 (3계층)</td><td class="py-3 px-4">셀 매트릭스 (2계층)</td><td class="py-3 px-4">Cell 매트릭스 (2계층, 영문)</td></tr>
+          <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold">명명 규칙</td><td class="py-3 px-4">한글 "○○팀"</td><td class="py-3 px-4">한글 "제품 셀·데이터 셀"</td><td class="py-3 px-4">영문 4자 <span class="eng">(Tech, Data, Mktg…)</span></td></tr>
+          <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold">리더 호칭</td><td class="py-3 px-4">본부장·팀장·과장</td><td class="py-3 px-4">셀 리더</td><td class="py-3 px-4 eng">Lead · Manager</td></tr>
+          <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold">이메일 그룹</td><td class="py-3 px-4">한글·복잡</td><td class="py-3 px-4">product@ · marketing@</td><td class="py-3 px-4"><span class="eng">tech@ · data@ · mktg@ · hr@</span></td></tr>
+          <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold">Slack 채널</td><td class="py-3 px-4">#매입판매팀</td><td class="py-3 px-4">#제품셀 · #데이터셀</td><td class="py-3 px-4">#tech · #data · #mktg</td></tr>
+          <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold">우진 인원 적응</td><td class="py-3 px-4">✅ 매우 좋음</td><td class="py-3 px-4">△ 셀 개념 학습 필요</td><td class="py-3 px-4">⚠️ 영문 용어 학습 필요</td></tr>
+          <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold">겟차 인원 적응</td><td class="py-3 px-4">⚠️ 위계 부담</td><td class="py-3 px-4">✅ 익숙함</td><td class="py-3 px-4">✅ 익숙 · 스타트업 컬처</td></tr>
+          <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold">확장성</td><td class="py-3 px-4">본부 추가 필요</td><td class="py-3 px-4">셀 신설 유연</td><td class="py-3 px-4">셀 신설 · 글로벌 진출 자연스러움</td></tr>
+          <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold">투자 유치·대외</td><td class="py-3 px-4">전통 이미지</td><td class="py-3 px-4">스타트업 이미지</td><td class="py-3 px-4">✅ 국제 표준 · 투자자 커뮤니케이션 유리</td></tr>
+          <tr class="bg-yellow-50"><td class="py-3 px-4 font-bold">🎯 권장 시나리오</td><td class="py-3 px-4">우진 압도적 · 오프라인 확장</td><td class="py-3 px-4">겟차·우진 균형 · 국내 위주</td><td class="py-3 px-4"><b>라포르 브랜드 성장·투자 유치 지향</b> ⭐</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 하이브리드 -->
+    <div class="mt-8 bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-300 rounded-xl p-5">
+      <h3 class="font-extrabold text-emerald-800 text-lg mb-2">💡 하이브리드 최종 제안</h3>
+      <p class="text-sm text-slate-700 mb-4">
+        <b class="eng">V3 (Startup English)</b> 기반 조직명 채택 · 필드팀에서는 <b>Lead 아래 팀장·과장·대리 호칭 병존</b> 유지.
+        서울 크로스팀은 영문 리더 호칭 (<span class="eng">Tech Lead · Data Lead · Mktg Lead</span>) 사용.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+        <div class="bg-white/70 rounded-lg p-3">
+          <div class="font-bold text-emerald-700">🎨 서울 HQ · Cross Teams</div>
+          <div class="text-slate-600 mt-1">Tech · Data · Mktg · Back (영문 팀 · Lead 호칭)</div>
+        </div>
+        <div class="bg-white/70 rounded-lg p-3">
+          <div class="font-bold text-emerald-700">🏭 부산 Field · 매트릭스</div>
+          <div class="text-slate-600 mt-1">Buy · Sell · PDI · Ops (영문 셀 · 팀장·과장·대리 병존)</div>
+        </div>
+      </div>
+      <div class="mt-4 pt-3 border-t border-emerald-200 text-xs text-slate-600">
+        💬 <b>이유</b>: 라포르는 프리미엄 서비스 브랜드로 국제화 지향. 조직명·이메일 그룹·Slack 채널 모두 영문 통일. 우진 필드팀은 기존 직급 호칭 유지로 안정성 확보.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ Benchmark ============================================ -->
+<section id="viewBenchmark" class="max-w-7xl mx-auto p-6 hidden">
+  <div class="anim-in">
+    <div class="mb-6">
+      <h2 class="text-2xl font-extrabold text-slate-900">📚 타사 사례 리서치</h2>
+      <p class="text-sm text-slate-600 mt-1">헤이딜러 · 케이카 조직 구조 · 부서·직무 벤치마킹</p>
+    </div>
+
+    <!-- 헤이딜러 -->
+    <div class="bg-white rounded-xl border-2 border-blue-200 p-6 mb-6">
+      <div class="flex items-start justify-between mb-4">
+        <div>
+          <div class="text-xs font-bold text-blue-700 uppercase eng">Startup · CPO Platform</div>
+          <h3 class="text-2xl font-extrabold text-slate-900 eng">Heydealer <span class="text-slate-500 font-normal">(피알앤디컴퍼니)</span></h3>
+        </div>
+        <span class="badge-getcha">134명 · 서초·인천·용인</span>
+      </div>
+
+      <div class="mb-4">
+        <h4 class="font-bold text-slate-700 mb-2">🏢 계열사 구조 (3분사)</h4>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="bg-blue-50 rounded-lg p-3">
+            <div class="font-bold text-sm eng">PRND Company (본사)</div>
+            <div class="text-xs text-slate-600 mt-1">서초 · 플랫폼·경영·프로덕트</div>
+          </div>
+          <div class="bg-blue-50 rounded-lg p-3">
+            <div class="font-bold text-sm eng">PRND Techbay</div>
+            <div class="text-xs text-slate-600 mt-1">인천 · 정비·진단·상품화 (PDI)</div>
+          </div>
+          <div class="bg-blue-50 rounded-lg p-3">
+            <div class="font-bold text-sm eng">PRND Revolt</div>
+            <div class="text-xs text-slate-600 mt-1">용인 · 전기차·프리미엄 판매</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <h4 class="font-bold text-slate-700 mb-2">👥 직군 (8개)</h4>
+        <div class="flex gap-2 flex-wrap text-xs">
+          <span class="bg-slate-100 px-3 py-1 rounded-full">판매</span>
+          <span class="bg-slate-100 px-3 py-1 rounded-full">생산/상품화</span>
+          <span class="bg-slate-100 px-3 py-1 rounded-full">CX (고객)</span>
+          <span class="bg-slate-100 px-3 py-1 rounded-full">제품 (Product)</span>
+          <span class="bg-slate-100 px-3 py-1 rounded-full">사업개발 (zero 평가사)</span>
+          <span class="bg-slate-100 px-3 py-1 rounded-full">경영지원</span>
+          <span class="bg-slate-100 px-3 py-1 rounded-full">법무 (사내 변호사)</span>
+          <span class="bg-slate-100 px-3 py-1 rounded-full">운영</span>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-slate-700 mb-2">💻 개발팀 세분화 (기술 블로그)</h4>
+        <div class="flex gap-2 flex-wrap text-xs eng">
+          <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">FTR · 기획</span>
+          <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">HDA · Android</span>
+          <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">HDW · iOS</span>
+          <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">HDI · Web</span>
+          <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">HDS · Server</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 케이카 -->
+    <div class="bg-white rounded-xl border-2 border-red-200 p-6 mb-6">
+      <div class="flex items-start justify-between mb-4">
+        <div>
+          <div class="text-xs font-bold text-red-700 uppercase eng">Large Retail · CPO Direct</div>
+          <h3 class="text-2xl font-extrabold text-slate-900 eng">K Car <span class="text-slate-500 font-normal">(케이카)</span></h3>
+        </div>
+        <span class="badge-woojin">상장사(코스피 381970) · 48개 직영점</span>
+      </div>
+
+      <div class="mb-4">
+        <h4 class="font-bold text-slate-700 mb-2">🏭 사업 부문 (3개)</h4>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="bg-red-50 rounded-lg p-3">
+            <div class="font-bold text-sm">중고차 소매 (Retail)</div>
+            <div class="text-xs text-slate-600 mt-1">직영 CPO · 매입→진단→관리→판매→사후책임 · 48개 직영점 + "내차사기 홈서비스"</div>
+          </div>
+          <div class="bg-red-50 rounded-lg p-3">
+            <div class="font-bold text-sm">중고차 경매 (Auction)</div>
+            <div class="text-xs text-slate-600 mt-1">B2B 딜러 대상 · 오산·세종 경매장 · 상품화 부적합 차량 회전</div>
+          </div>
+          <div class="bg-red-50 rounded-lg p-3">
+            <div class="font-bold text-sm">렌터카 사업</div>
+            <div class="text-xs text-slate-600 mt-1">신차·중고차 렌탈 · 온라인·관공서·법인 영업</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-slate-700 mb-2">👥 채용 직무 카테고리 (9개)</h4>
+        <div class="flex gap-2 flex-wrap text-xs">
+          <span class="bg-slate-100 px-3 py-1 rounded-full">일반영업</span>
+          <span class="bg-slate-100 px-3 py-1 rounded-full">영업관리/지원/기획</span>
+          <span class="bg-slate-100 px-3 py-1 rounded-full">B2B·기술영업</span>
+          <span class="bg-slate-100 px-3 py-1 rounded-full">고객관리/인바운드</span>
+          <span class="bg-slate-100 px-3 py-1 rounded-full">마케팅/PR/분석</span>
+          <span class="bg-slate-100 px-3 py-1 rounded-full">기획/전략/경영</span>
+          <span class="bg-slate-100 px-3 py-1 rounded-full">재무/세무/IR</span>
+          <span class="bg-slate-100 px-3 py-1 rounded-full">인사/노무/교육</span>
+          <span class="bg-slate-100 px-3 py-1 rounded-full">AS/서비스/수리</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 벤치마킹 포인트 -->
+    <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl border-2 border-yellow-300 p-6">
+      <h3 class="font-extrabold text-orange-800 text-lg mb-4">🎯 겟차셀렉트 벤치마킹 포인트 (7가지)</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="bg-white/80 rounded-lg p-3">
+          <div class="font-bold text-slate-800 text-sm">① 중고차 매매업 3대 축 필수</div>
+          <div class="text-xs text-slate-600 mt-1">매입 (Buy) · 상품화 (PDI) · 판매 (Sell) — 케이카·헤이딜러 공통. 겟차셀렉트도 필드팀 이렇게 구성.</div>
+        </div>
+        <div class="bg-white/80 rounded-lg p-3">
+          <div class="font-bold text-slate-800 text-sm">② 지역·기능 분산 자연스러움</div>
+          <div class="text-xs text-slate-600 mt-1">헤이딜러: 서초·인천·용인 3거점. 겟차셀렉트: 서울(HQ) + 부산(Field) 자연스러운 분산.</div>
+        </div>
+        <div class="bg-white/80 rounded-lg p-3">
+          <div class="font-bold text-slate-800 text-sm">③ 라포르 = 서비스 브랜드 (헤이딜러 방식)</div>
+          <div class="text-xs text-slate-600 mt-1">헤이딜러가 "PRND"의 대표 서비스. 라포르도 겟차셀렉트의 <b>서비스명</b>. 별도 팀 없이 회사 전체가 라포르 운영.</div>
+        </div>
+        <div class="bg-white/80 rounded-lg p-3">
+          <div class="font-bold text-slate-800 text-sm">④ 스타트업 규모(20명) 조직</div>
+          <div class="text-xs text-slate-600 mt-1">헤이딜러 134명도 스타트업식 유지. 겟차셀렉트 16명은 셀 매트릭스 최적.</div>
+        </div>
+        <div class="bg-white/80 rounded-lg p-3">
+          <div class="font-bold text-slate-800 text-sm">⑤ 경매·B2B 딜러는 중장기 (케이카)</div>
+          <div class="text-xs text-slate-600 mt-1">매입 볼륨 증가 시 도매·경매 회전 필요. 정식 운영 후 검토.</div>
+        </div>
+        <div class="bg-white/80 rounded-lg p-3">
+          <div class="font-bold text-slate-800 text-sm">⑥ Product 세분화 (헤이딜러)</div>
+          <div class="text-xs text-slate-600 mt-1">기획·앱·웹·서버 5개 트랙. 겟차셀렉트 Tech 초기엔 통합 → 규모 확장 시 분리.</div>
+        </div>
+        <div class="bg-white/80 rounded-lg p-3 md:col-span-2">
+          <div class="font-bold text-slate-800 text-sm">⑦ 리더 호칭 컬처 통일</div>
+          <div class="text-xs text-slate-600 mt-1">헤이딜러: 팀장·매니저 (스타트업). 케이카: 본부·부문 (전통). 겟차셀렉트는 하이브리드 — 서울 크로스팀은 "Lead", 부산 필드팀은 팀장·과장 병존.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 출처 -->
+    <div class="mt-6 bg-white rounded-xl border border-slate-200 p-4 text-xs text-slate-500">
+      <b class="text-slate-700">📎 참고 자료:</b>
+      <span>피알앤디컴퍼니 채용 홈페이지 (prnd.co.kr/ko/apply) · PRND 나무위키 · Heydealer PRND Medium 기술 블로그 · LinkedIn 헤이딜러 · 원티드 기업정보 · 케이카 채용 홈페이지 (recruit.kcar.com) · 케이카 나무위키 · 잡플래닛 케이카 · KRX 사업보고서</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ People ============================================ -->
+<section id="viewPeople" class="max-w-7xl mx-auto p-6 hidden">
+  <div class="anim-in">
+    <div class="mb-6 flex items-start justify-between flex-wrap gap-3">
+      <div>
+        <h2 class="text-2xl font-extrabold text-slate-900">👥 합작법인 참여 인원</h2>
+        <p class="text-sm text-slate-600 mt-1">겟차 9명 · 우진 7명 · 총 16명 · 라포르(rapor.co.kr) 계정 발급 완료</p>
+      </div>
+      <div class="flex gap-2">
+        <span class="badge-getcha">겟차 9명</span>
+        <span class="badge-woojin">우진 7명</span>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl border border-slate-200 overflow-hidden overflow-x-auto">
+      <table class="w-full text-sm min-w-[900px]">
+        <thead>
+          <tr class="bg-slate-900 text-white text-xs">
+            <th class="py-3 px-3 text-left">#</th>
+            <th class="py-3 px-3 text-left">닉네임</th>
+            <th class="py-3 px-3 text-left">성명</th>
+            <th class="py-3 px-3 text-left">직무</th>
+            <th class="py-3 px-3 text-left">라포르 이메일</th>
+            <th class="py-3 px-3 text-left">법인</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100" id="peopleTable">
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+      <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+        <div class="font-bold text-blue-800 mb-2">🎨 겟차 소속 (9명)</div>
+        <ul class="text-xs space-y-1 text-slate-700">
+          <li>• Gini는 대표이사이자 우진 소속이지만 매입 총괄 겸</li>
+          <li>• Alex, Dean은 사내이사 (등기)</li>
+          <li>• TJ · Cindy · Julian · Leo · Won · Joshua · Jelly = 실무 리더</li>
+        </ul>
+      </div>
+      <div class="bg-red-50 border border-red-200 rounded-xl p-4">
+        <div class="font-bold text-red-800 mb-2">🚗 우진 소속 (7명)</div>
+        <ul class="text-xs space-y-1 text-slate-700">
+          <li>• 대부분 부산 필드팀 실무 담당</li>
+          <li>• Gini(CEO), Jay(매입), Pitt(판매), Logan(복원), Ethan(광택)</li>
+          <li>• Woody(총괄 매니저), Fuel(성능·출고 매니저)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ Footer ============================================ -->
+<footer class="bg-slate-900 text-slate-400 py-6 mt-16 text-center text-xs">
+  <div class="max-w-7xl mx-auto px-6">
+    <div>겟차셀렉트 조직도 제안 · v2.1 · 2026.08.25 · 겟차 피플팀 정태준</div>
+    <div class="mt-1">라포르(rapor.co.kr) 서비스 운영 조직 · 벤치마킹: 케이카 · 헤이딜러</div>
+  </div>
+</footer>
+
+<script>
+const people = [
+  {no:1, nick:'지니 (Gini)', name:'이경진', role:'매입 · CEO', email:'jinny@rapor.co.kr', corp:'우진', tag:'woojin'},
+  {no:2, nick:'알렉스 (Alex)', name:'정유철', role:'사내이사', email:'alex@rapor.co.kr', corp:'겟차', tag:'getcha'},
+  {no:3, nick:'딘 (Dean)', name:'이동용', role:'사내이사', email:'dean@rapor.co.kr', corp:'겟차', tag:'getcha'},
+  {no:4, nick:'티제이 (TJ)', name:'정태준', role:'HR Director', email:'tj@rapor.co.kr', corp:'겟차', tag:'getcha'},
+  {no:5, nick:'신디 (Cindy)', name:'차예원', role:'HR & GA', email:'cindy@rapor.co.kr', corp:'겟차', tag:'getcha'},
+  {no:6, nick:'줄리안 (Julian)', name:'배준영', role:'Finance Director', email:'julian@rapor.co.kr', corp:'겟차', tag:'getcha'},
+  {no:7, nick:'레오 (Leo)', name:'이재호', role:'Backend Engineer', email:'leo@rapor.co.kr', corp:'겟차', tag:'getcha'},
+  {no:8, nick:'원 (Won)', name:'이형원', role:'Backend & Infra Engineer', email:'won@rapor.co.kr', corp:'겟차', tag:'getcha'},
+  {no:9, nick:'조슈아 (Joshua)', name:'이준범', role:'Data Scientist', email:'joshua@rapor.co.kr', corp:'겟차', tag:'getcha'},
+  {no:10, nick:'젤리 (Jelly)', name:'송재경', role:'Marketer', email:'jelly@rapor.co.kr', corp:'겟차', tag:'getcha'},
+  {no:11, nick:'제이 (Jay)', name:'남재찬', role:'매입', email:'jay@rapor.co.kr', corp:'우진', tag:'woojin'},
+  {no:12, nick:'로건 (Logan)', name:'김승현', role:'복원', email:'logan@rapor.co.kr', corp:'우진', tag:'woojin'},
+  {no:13, nick:'에단 (Ethan)', name:'최강민', role:'광택', email:'ethan@rapor.co.kr', corp:'우진', tag:'woojin'},
+  {no:14, nick:'우디 (Woody)', name:'조창우', role:'매니저 (총괄)', email:'woody@rapor.co.kr', corp:'우진', tag:'woojin'},
+  {no:15, nick:'퓨엘 (Fuel)', name:'김상진', role:'매니저 (성능 · 출고)', email:'fuel@rapor.co.kr', corp:'우진', tag:'woojin'},
+  {no:16, nick:'피트 (Pitt)', name:'장규형', role:'판매', email:'pitt@rapor.co.kr', corp:'우진', tag:'woojin'},
+];
+const tbody = document.getElementById('peopleTable');
+people.forEach(p => {
+  const badge = p.tag === 'getcha' ? 'badge-getcha' : 'badge-woojin';
+  tbody.innerHTML += `
+    <tr class="hover:bg-slate-50">
+      <td class="py-2.5 px-3 text-slate-500">${p.no}</td>
+      <td class="py-2.5 px-3 font-bold">${p.nick}</td>
+      <td class="py-2.5 px-3">${p.name}</td>
+      <td class="py-2.5 px-3 text-slate-600">${p.role}</td>
+      <td class="py-2.5 px-3 text-slate-500 eng">${p.email}</td>
+      <td class="py-2.5 px-3"><span class="${badge}">${p.corp}</span></td>
+    </tr>`;
+});
+
+function showTab(tab) {
+  const tabs = ['V1','V2','V3','Compare','Benchmark','People'];
+  tabs.forEach(t => {
+    const btn = document.getElementById('tab'+t);
+    const view = document.getElementById('view'+t);
+    if (t === tab) {
+      btn.classList.remove('tab-inactive'); btn.classList.add('tab-active');
+      view.classList.remove('hidden');
+    } else {
+      btn.classList.remove('tab-active'); btn.classList.add('tab-inactive');
+      view.classList.add('hidden');
+    }
+  });
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+</script>
+</body>
+</html>
